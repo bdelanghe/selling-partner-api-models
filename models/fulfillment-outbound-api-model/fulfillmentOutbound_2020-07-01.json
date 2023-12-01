@@ -1884,6 +1884,209 @@
         }
       }
     },
+    "/fba/outbound/2020-07-01/deliveryOfferings": {
+      "x-amzn-api-sandbox": {
+        "dynamic": {}
+      },
+      "post": {
+        "tags": [
+          "fbaOutbound"
+        ],
+        "description": "Returns fast delivery estimates for an Amazon FBA Product, based on the request criteria.\n\n**Usage Plan:**\n\n| Rate (requests per second) | Burst |\n| ---- | ---- |\n| 2 | 30 |\n\nThe `x-amzn-RateLimit-Limit` response header returns the usage plan rate limits that were applied to the requested operation, when available. The table above indicates the default rate and burst values for this operation. Selling partners whose business demands require higher throughput may see higher rate and burst values than those shown here. For more information, see [Usage Plans and Rate Limits in the Selling Partner API](https://developer-docs.amazon.com/sp-api/docs/usage-plans-and-rate-limits-in-the-sp-api).",
+        "operationId": "getDeliveryOfferings",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetDeliveryOfferingsRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "examples": {
+              "payload": {
+                "fulfillmentPreviews": [
+                  {
+                    "shippingSpeedCategory": "Standard",
+                    "isFulfillable": true,
+                    "estimatedShippingWeight": {
+                      "unit": "POUNDS",
+                      "value": "22"
+                    },
+                    "estimatedFees": [
+                      {
+                        "name": "FBAPerUnitFulfillmentFee",
+                        "amount": {
+                          "currencyCode": "USD",
+                          "value": "19.71"
+                        }
+                      }
+                    ],
+                    "fulfillmentPreviewShipments": [
+                      {
+                        "earliestShipDate": "2020-02-11T18:16:16Z",
+                        "latestShipDate": "2020-02-11T18:16:16Z",
+                        "earliestArrivalDate": "2020-02-17T18:16:16Z",
+                        "latestArrivalDate": "2020-02-17T18:16:16Z",
+                        "fulfillmentPreviewItems": [
+                          {
+                            "sellerSku": "PSMM-TEST-SKU-Jan-21_19_39_23-0788",
+                            "quantity": 1,
+                            "sellerFulfillmentOrderItemId": "OrderItemID2",
+                            "estimatedShippingWeight": {
+                              "unit": "POUNDS",
+                              "value": "20"
+                            },
+                            "shippingWeightCalculationMethod": "Package"
+                          }
+                        ]
+                      }
+                    ],
+                    "unfulfillablePreviewItems": [],
+                    "marketplaceId": "ATVPDKIKX0DER",
+                    "featureConstraints": [
+                      {
+                        "featureName": "BLANK_BOX",
+                        "featureFulfillmentPolicy": "NotRequired"
+                      },
+                      {
+                        "featureName": "BLOCK_AMZL",
+                        "featureFulfillmentPolicy": "Required"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "400": {
+            "description": "Request has missing or invalid parameters and cannot be parsed.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "401": {
+            "description": "The request's Authorization header is not formatted correctly or does not contain a valid token.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation.\n_Note:_ For this status code, the rate limit header is deprecated and no longer returned."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "403": {
+            "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource does not exist.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "429": {
+            "description": "The frequency of requests was greater than allowed.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation.\n_Note:_ For this status code, the rate limit header is deprecated and no longer returned."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation.\n_Note:_ For this status code, the rate limit header is deprecated and no longer returned."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          },
+          "503": {
+            "description": "Temporary overloading or maintenance of the server.",
+            "schema": {
+              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+            },
+            "headers": {
+              "x-amzn-RateLimit-Limit": {
+                "type": "string",
+                "description": "Your rate limit (requests per second) for this operation.\n_Note:_ For this status code, the rate limit header is deprecated and no longer returned."
+              },
+              "x-amzn-RequestId": {
+                "type": "string",
+                "description": "Unique request reference identifier."
+              }
+            }
+          }
+        }
+      }
+    },
     "/fba/outbound/2020-07-01/features": {
       "x-amzn-api-sandbox": {
         "dynamic": {}
@@ -2499,6 +2702,48 @@
       },
       "description": "A physical address."
     },
+    "VariablePrecisionAddress": {
+      "type": "object",
+      "required": [
+        "countryCode",
+        "postalCode"
+      ],
+      "properties": {
+        "addressLine1": {
+          "type": "string",
+          "description": "The first line of the address."
+        },
+        "addressLine2": {
+          "type": "string",
+          "description": "Additional address information, if required."
+        },
+        "addressLine3": {
+          "type": "string",
+          "description": "Additional address information, if required."
+        },
+        "city": {
+          "type": "string",
+          "description": "The city where the person, business, or institution is located. This property is required in all countries except Japan. It should not be used in Japan."
+        },
+        "districtOrCounty": {
+          "type": "string",
+          "description": "The district or county where the person, business, or institution is located."
+        },
+        "stateOrRegion": {
+          "type": "string",
+          "description": "The state or region where the person, business or institution is located."
+        },
+        "postalCode": {
+          "type": "string",
+          "description": "The postal code of the address."
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "The two digit country code. In ISO 3166-1 alpha-2 format."
+        }
+      },
+      "description": "A physical address with varying degrees of precision. A more precise address can provide more accurate results than country code and postal code alone."
+    },
     "CODSettings": {
       "type": "object",
       "required": [
@@ -3084,6 +3329,72 @@
         "$ref": "#/definitions/FulfillmentOrderItem"
       }
     },
+    "DeliveryMessage": {
+      "type": "object",
+      "required": [
+        "text",
+        "locale"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The message text."
+        },
+        "locale": {
+          "type": "string",
+          "description": "The message locale.",
+        }
+      },
+      "description": "A message with a locale."
+    },
+    "DeliveryPolicy": {
+      "type": "object",
+      "required": [
+        "message"
+      ],
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/DeliveryMessage"
+        }
+      },
+      "description": "A delivery policy."
+    },
+    "DateRange": {
+      "type": "object",
+      "required": [
+        "earliest",
+        "latest"
+      ],
+      "properties": {
+        "earliest": {
+          "description": "The earliest date that it could be delivered, in ISO 8601 date time format.",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "latest": {
+          "description": "The latest date that it could be delivered, in ISO 8601 date time format.",
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "description": "The earliest and latest dates that an order will be delivered."
+    },
+    "DeliveryOffering": {
+      "type": "object",
+      "required": [
+        "expiresAt",
+        "dateRange",
+        "policy"
+      ],
+      "properties": {
+        "expiresAt": {
+          "description": "The date and time that the offer expires.",
+          "$ref": "#/definitions/Timestamp"
+        },
+        "dateRange": {
+          "$ref": "#/definitions/DateRange"
+        },
+
+      }
+    },
     "FulfillmentPreview": {
       "type": "object",
       "required": [
@@ -3196,6 +3507,13 @@
       "description": "An array of fulfillment preview information.",
       "items": {
         "$ref": "#/definitions/FulfillmentPreview"
+      }
+    },
+    "DeliveryOfferingList": {
+      "type": "array",
+      "description": "An array of delivery offering information.",
+      "items": {
+        "$ref": "#/definitions/DeliveryOffering"
       }
     },
     "FulfillmentPreviewShipment": {
@@ -3482,6 +3800,29 @@
         "$ref": "#/definitions/GetFulfillmentPreviewItem"
       }
     },
+    "GetDeliveryOfferingsRequest": {
+      "type": "object",
+      "required": [
+        "sellerSKU",
+        "destinationAddress",
+        "shipFromCountryCode"
+      ],
+      "properties": {
+        "sellerSku": {
+          "type": "string",
+          "description": "The seller SKU of the item.",
+          "maxLength": 50
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "destinationAddress": {
+          "description": "A physical address with varying degrees of precision. A more precise address can provide more accurate results than country code and postal code alone.",
+          "$ref": "#/definitions/VariablePrecisionAddress"
+        }
+      },
+      "description": "The request body schema for the getDeliveryOfferings operation."
+    },
     "GetFulfillmentPreviewRequest": {
       "type": "object",
       "required": [
@@ -3545,6 +3886,29 @@
         }
       },
       "description": "The response schema for the getFulfillmentPreview operation."
+    },
+    "GetDeliveryOfferingResult": {
+      "type": "object",
+      "properties": {
+        "fulfillmentPreviews": {
+          "$ref": "#/definitions/FulfillmentPreviewList"
+        }
+      },
+      "description": "A list of fulfillment order previews, including estimated shipping weights, estimated shipping fees, and estimated ship dates and arrival dates."
+    },
+    "GetDeliveryOfferingsResponse": {
+      "type": "object",
+      "properties": {
+        "payload": {
+          "description": "The response payload for the getDeliveryOfferings operation.",
+          "$ref": "#/definitions/GetDeliveryOfferingResult"
+        },
+        "errors": {
+          "description": "One or more unexpected errors occurred during the getDeliveryOfferings operation.",
+          "$ref": "#/definitions/ErrorList"
+        }
+      },
+      "description": "The response schema for the getDeliveryOfferings operation."
     },
     "InvalidItemReasonCode": {
       "type": "string",
