@@ -1900,7 +1900,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetDeliveryOfferingsRequest"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             }
           }
         ],
@@ -1908,62 +1908,26 @@
           "200": {
             "description": "Success.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "examples": {
               "payload": {
-                "fulfillmentPreviews": [
+                "deliveryOfferings": [
                   {
-                    "shippingSpeedCategory": "Standard",
-                    "isFulfillable": true,
-                    "estimatedShippingWeight": {
-                      "unit": "POUNDS",
-                      "value": "22"
-                    },
-                    "estimatedFees": [
-                      {
-                        "name": "FBAPerUnitFulfillmentFee",
-                        "amount": {
-                          "currencyCode": "USD",
-                          "value": "19.71"
-                        }
-                      }
-                    ],
-                    "fulfillmentPreviewShipments": [
-                      {
-                        "earliestShipDate": "2020-02-11T18:16:16Z",
-                        "latestShipDate": "2020-02-11T18:16:16Z",
-                        "earliestArrivalDate": "2020-02-17T18:16:16Z",
-                        "latestArrivalDate": "2020-02-17T18:16:16Z",
-                        "fulfillmentPreviewItems": [
-                          {
-                            "sellerSku": "PSMM-TEST-SKU-Jan-21_19_39_23-0788",
-                            "quantity": 1,
-                            "sellerFulfillmentOrderItemId": "OrderItemID2",
-                            "estimatedShippingWeight": {
-                              "unit": "POUNDS",
-                              "value": "20"
-                            },
-                            "shippingWeightCalculationMethod": "Package"
-                          }
-                        ]
-                      }
-                    ],
-                    "unfulfillablePreviewItems": [],
-                    "marketplaceId": "ATVPDKIKX0DER",
-                    "featureConstraints": [
-                      {
-                        "featureName": "BLANK_BOX",
-                        "featureFulfillmentPolicy": "NotRequired"
+                      "dateRange": {
+                          "earliest": "2023-09-21T15:58:53Z",
+                          "latest": "2023-09-22T15:58:53Z"
                       },
-                      {
-                        "featureName": "BLOCK_AMZL",
-                        "featureFulfillmentPolicy": "Required"
+                      "expiresAt": "2023-09-19T17:58:53Z",
+                      "policy": {
+                          "messaging": {
+                              "locale": "en-US",
+                              "text": "Fastest Delivery Thu, Sep 21"
+                          }
                       }
-                    ]
                   }
-                ]
-              }
+              ]
+          }
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -1979,7 +1943,7 @@
           "400": {
             "description": "Request has missing or invalid parameters and cannot be parsed.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -1995,7 +1959,7 @@
           "401": {
             "description": "The request's Authorization header is not formatted correctly or does not contain a valid token.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -2011,7 +1975,7 @@
           "403": {
             "description": "Indicates that access to the resource is forbidden. Possible reasons include Access Denied, Unauthorized, Expired Token, or Invalid Signature.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RequestId": {
@@ -2023,7 +1987,7 @@
           "404": {
             "description": "The specified resource does not exist.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -2039,7 +2003,7 @@
           "429": {
             "description": "The frequency of requests was greater than allowed.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -2055,7 +2019,7 @@
           "500": {
             "description": "An unexpected condition occurred that prevented the server from fulfilling the request.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -2071,7 +2035,7 @@
           "503": {
             "description": "Temporary overloading or maintenance of the server.",
             "schema": {
-              "$ref": "#/definitions/GetFulfillmentPreviewResponse"
+              "$ref": "#/definitions/GetDeliveryOfferingsResponse"
             },
             "headers": {
               "x-amzn-RateLimit-Limit": {
@@ -3342,7 +3306,7 @@
         },
         "locale": {
           "type": "string",
-          "description": "The message locale.",
+          "description": "The message locale."
         }
       },
       "description": "A message with a locale."
@@ -3392,8 +3356,11 @@
         "dateRange": {
           "$ref": "#/definitions/DateRange"
         },
-
-      }
+        "policy": {
+          "$ref": "#/definitions/DeliveryPolicy"
+        }
+      },
+      "description": "Estimated delivery dates for different ship speeds."
     },
     "FulfillmentPreview": {
       "type": "object",
@@ -3891,7 +3858,7 @@
       "type": "object",
       "properties": {
         "fulfillmentPreviews": {
-          "$ref": "#/definitions/FulfillmentPreviewList"
+          "$ref": "#/definitions/DeliveryOfferingList"
         }
       },
       "description": "A list of fulfillment order previews, including estimated shipping weights, estimated shipping fees, and estimated ship dates and arrival dates."
