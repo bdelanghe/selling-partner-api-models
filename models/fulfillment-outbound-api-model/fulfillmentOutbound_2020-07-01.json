@@ -3786,7 +3786,12 @@
         "destinationAddress": {
           "description": "A physical address with varying degrees of precision. A more precise address can provide more accurate results than country code and postal code alone.",
           "$ref": "#/definitions/VariablePrecisionAddress"
-        }
+        },
+        "shipFromCountryCode": {
+            "type": "string",
+            "format": "[A-Z]{2}",
+            "description": "The country code of the country to which the items will be shipped."
+          }
       },
       "description": "The request body schema for the getDeliveryOfferings operation."
     },
